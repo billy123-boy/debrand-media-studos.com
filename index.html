@@ -1,0 +1,888 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>DE-BRAND MEDIA STUDIOS | Photo & Video Experts</title>
+  <!-- Google Fonts & Font Awesome Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #0A0A0A;
+      color: #F0F0F0;
+      scroll-behavior: smooth;
+      line-height: 1.5;
+    }
+
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #1A1A1A;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #FF4D4D;
+      border-radius: 6px;
+    }
+
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* navigation */
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 0;
+      flex-wrap: wrap;
+      position: relative;
+      z-index: 10;
+    }
+    .logo {
+      font-size: 1.8rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      background: linear-gradient(135deg, #FF4D4D, #FFFFFF);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    .logo span {
+      color: #FFFFFF;
+      background: none;
+      -webkit-background-clip: unset;
+      background-clip: unset;
+      font-weight: 800;
+    }
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+    .nav-links a {
+      text-decoration: none;
+      color: #E0E0E0;
+      font-weight: 500;
+      transition: 0.3s;
+      font-size: 1rem;
+    }
+    .nav-links a:hover, .nav-links a.active {
+      color: #FF4D4D;
+    }
+    .menu-icon {
+      font-size: 1.8rem;
+      cursor: pointer;
+      display: none;
+    }
+
+    /* Hero Slider Section */
+    .hero-slider {
+      position: relative;
+      width: 100%;
+      height: 90vh;
+      min-height: 600px;
+      overflow: hidden;
+    }
+    .slide-container {
+      width: 100%;
+      height: 100%;
+      position: relative;
+    }
+    .slide {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      transition: opacity 1s ease-in-out;
+      background-size: cover;
+      background-position: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .slide.active {
+      opacity: 1;
+      z-index: 1;
+    }
+    .slide-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.4) 100%);
+    }
+    .slide-content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      max-width: 800px;
+      padding: 2rem;
+      color: white;
+    }
+    .slide-content h1 {
+      font-size: 3.5rem;
+      font-weight: 800;
+      margin-bottom: 1rem;
+      animation: fadeInUp 0.8s ease;
+    }
+    .slide-content p {
+      font-size: 1.2rem;
+      margin-bottom: 2rem;
+      animation: fadeInUp 0.8s ease 0.2s both;
+    }
+    .slide-content .btn-group {
+      justify-content: center;
+      animation: fadeInUp 0.8s ease 0.4s both;
+    }
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    .slider-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(255,77,77,0.7);
+      color: white;
+      border: none;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      cursor: pointer;
+      z-index: 10;
+      font-size: 1.5rem;
+      transition: 0.3s;
+    }
+    .slider-btn:hover {
+      background: #FF4D4D;
+    }
+    .prev-btn {
+      left: 20px;
+    }
+    .next-btn {
+      right: 20px;
+    }
+    .slider-dots {
+      position: absolute;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 12px;
+      z-index: 10;
+    }
+    .slider-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.5);
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    .slider-dot.active-dot-slider {
+      background: #FF4D4D;
+      width: 30px;
+      border-radius: 10px;
+    }
+    @media (max-width: 768px) {
+      .hero-slider { height: 70vh; min-height: 500px; }
+      .slide-content h1 { font-size: 2rem; }
+      .slide-content p { font-size: 1rem; }
+      .slider-btn { width: 35px; height: 35px; font-size: 1rem; }
+    }
+
+    .section {
+      padding: 80px 0;
+    }
+    .section-title {
+      text-align: center;
+      font-size: 2.5rem;
+      font-weight: 800;
+      margin-bottom: 3rem;
+    }
+    .section-title span {
+      color: #FF4D4D;
+    }
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+    }
+    .service-card {
+      background: #111111;
+      padding: 2rem;
+      border-radius: 28px;
+      transition: all 0.3s;
+      border: 1px solid #222;
+      text-align: center;
+    }
+    .service-card:hover {
+      transform: translateY(-8px);
+      border-color: #FF4D4D;
+      box-shadow: 0 20px 30px -10px rgba(255,77,77,0.2);
+    }
+    .service-icon {
+      font-size: 3rem;
+      color: #FF4D4D;
+      margin-bottom: 1.2rem;
+    }
+    .service-card h3 {
+      font-size: 1.6rem;
+      margin-bottom: 0.8rem;
+    }
+    .service-card p {
+      color: #B0B0B0;
+    }
+
+    /* Portfolio Categories */
+    .portfolio-category {
+      margin-bottom: 3.5rem;
+    }
+    .category-title {
+      font-size: 1.8rem;
+      margin-bottom: 1.5rem;
+      border-left: 4px solid #FF4D4D;
+      padding-left: 1rem;
+    }
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+    }
+    .gallery-item {
+      position: relative;
+      overflow: hidden;
+      border-radius: 24px;
+      aspect-ratio: 4 / 3;
+      cursor: pointer;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+      background: #111;
+    }
+    .gallery-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+    .gallery-item:hover img {
+      transform: scale(1.05);
+    }
+    .overlay {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: linear-gradient(to top, #000000cc, transparent);
+      padding: 1.5rem;
+      color: white;
+      transform: translateY(100%);
+      transition: 0.3s;
+    }
+    .gallery-item:hover .overlay {
+      transform: translateY(0);
+    }
+    .overlay span {
+      font-weight: 600;
+      font-size: 1.2rem;
+    }
+
+    /* Testimonials */
+    .testimonial-slider {
+      max-width: 800px;
+      margin: 0 auto;
+      background: #0F0F0F;
+      border-radius: 32px;
+      padding: 2rem;
+      text-align: center;
+      box-shadow: 0 20px 35px rgba(0,0,0,0.4);
+    }
+    .testimonial-text {
+      font-size: 1.2rem;
+      font-style: italic;
+      margin-bottom: 1rem;
+      color: #DDD;
+    }
+    .testimonial-author {
+      font-weight: 700;
+      color: #FF4D4D;
+    }
+    .dots {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin-top: 1.5rem;
+    }
+    .dot {
+      width: 10px;
+      height: 10px;
+      background: #444;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    .dot.active-dot {
+      background: #FF4D4D;
+      width: 28px;
+    }
+
+    /* Contact */
+    .contact-wrapper {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+      background: #111;
+      border-radius: 32px;
+      padding: 2rem;
+    }
+    .contact-info {
+      flex: 1;
+    }
+    .contact-form {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    .contact-form input, .contact-form textarea {
+      background: #1E1E1E;
+      border: 1px solid #333;
+      padding: 14px 18px;
+      border-radius: 28px;
+      color: white;
+      font-family: inherit;
+      font-size: 1rem;
+      outline: none;
+      transition: 0.2s;
+    }
+    .contact-form input:focus, .contact-form textarea:focus {
+      border-color: #FF4D4D;
+    }
+    .contact-info i {
+      color: #FF4D4D;
+      margin-right: 12px;
+      width: 30px;
+    }
+    .contact-info p {
+      margin: 1rem 0;
+    }
+    .whatsapp-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: #25D366;
+      color: #000;
+      padding: 12px 24px;
+      border-radius: 40px;
+      font-weight: bold;
+      text-decoration: none;
+      margin-top: 20px;
+      transition: 0.3s;
+    }
+    .whatsapp-btn:hover {
+      background: #128C7E;
+      transform: scale(1.02);
+      color: white;
+    }
+    footer {
+      background: #020202;
+      padding: 40px 0;
+      text-align: center;
+      border-top: 1px solid #222;
+    }
+    .social-icons a {
+      color: #aaa;
+      font-size: 1.6rem;
+      margin: 0 12px;
+      transition: 0.3s;
+      display: inline-block;
+    }
+    .social-icons a:hover {
+      color: #FF4D4D;
+      transform: translateY(-3px) scale(1.1);
+    }
+
+    .loading-spinner {
+      display: none;
+      width: 20px;
+      height: 20px;
+      border: 2px solid #fff;
+      border-top: 2px solid #FF4D4D;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin-left: 10px;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    .btn-primary:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    @media (max-width: 900px) {
+      .navbar {
+        position: relative;
+      }
+      .nav-links {
+        position: fixed;
+        top: 0;
+        left: -100%;
+        width: 70%;
+        height: 100vh;
+        background: #0A0A0A;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        transition: 0.3s;
+        z-index: 1000;
+        gap: 2rem;
+        backdrop-filter: blur(12px);
+        background: rgba(10,10,10,0.98);
+        border-right: 1px solid #333;
+      }
+      .nav-links.active {
+        left: 0;
+      }
+      .menu-icon {
+        display: block;
+        z-index: 1100;
+      }
+      .close-icon {
+        position: absolute;
+        top: 30px;
+        right: 30px;
+        font-size: 2rem;
+        display: block !important;
+      }
+    }
+    @media (max-width: 680px) {
+      .container {
+        padding: 0 20px;
+      }
+      .section-title {
+        font-size: 2rem;
+      }
+      .category-title {
+        font-size: 1.4rem;
+      }
+      .social-icons a {
+        font-size: 1.3rem;
+        margin: 0 8px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="container">
+    <nav class="navbar">
+      <div class="logo">DE-BRAND<span> MEDIA</span> STUDIOS</div>
+      <div class="menu-icon" id="menuToggle">
+        <i class="fas fa-bars"></i>
+      </div>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#home" class="active-nav">Home</a></li>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#portfolio">Portfolio</a></li>
+        <li><a href="#testimonials">Reviews</a></li>
+        <li><a href="#contact">Contact</a></li>
+        <li class="close-icon" id="closeMenu"><i class="fas fa-times"></i></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <!-- Hero Slider Section -->
+  <section id="home" class="hero-slider">
+    <div class="slide-container">
+      <div class="slide active" style="background-image: url('https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?w=1600&h=900&fit=crop');">
+        <div class="slide-overlay"></div>
+        <div class="slide-content">
+          <h1>Capture <span style="color:#FF4D4D;">Moments</span>, Create <span style="color:#FF4D4D;">Masterpieces</span></h1>
+          <p>Premium Photography • Cinematic Videography • Poster Design • Wedding & Film Capturing</p>
+          <div class="btn-group">
+            <a href="#contact" class="btn btn-primary">Book a Shoot</a>
+            <a href="#portfolio" class="btn btn-outline">View Portfolio</a>
+          </div>
+        </div>
+      </div>
+      <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1519741497674-611481863552?w=1600&h=900&fit=crop');">
+        <div class="slide-overlay"></div>
+        <div class="slide-content">
+          <h1>Wedding <span style="color:#FF4D4D;">Cinematography</span></h1>
+          <p>Elegant, emotional, and timeless wedding films that tell your unique love story.</p>
+        </div>
+      </div>
+      <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1539109136881-3be0616acf4b?w=1600&h=900&fit=crop');">
+        <div class="slide-overlay"></div>
+        <div class="slide-content">
+          <h1>Creative <span style="color:#FF4D4D;">Posters & Design</span></h1>
+          <p>Stunning visuals that make your brand unforgettable. Custom posters, flyers & more.</p>
+        </div>
+      </div>
+      <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1448375240586-882707db888b?w=1600&h=900&fit=crop');">
+        <div class="slide-overlay"></div>
+        <div class="slide-content">
+          <h1>Film <span style="color:#FF4D4D;">Capturing</span> & Photoshoots</h1>
+          <p>From cinematic shorts to professional photoshoots, we bring your vision to life.</p>
+        </div>
+      </div>
+      <button class="slider-btn prev-btn" id="prevSlide"><i class="fas fa-chevron-left"></i></button>
+      <button class="slider-btn next-btn" id="nextSlide"><i class="fas fa-chevron-right"></i></button>
+      <div class="slider-dots" id="sliderDots"></div>
+    </div>
+  </section>
+
+  <section id="services" class="section">
+    <div class="container">
+      <h2 class="section-title">What We <span>Deliver</span></h2>
+      <div class="services-grid">
+        <div class="service-card"><div class="service-icon"><i class="fas fa-camera-retro"></i></div><h3>Photography</h3><p>Portraits, fashion, product & creative photoshoots.</p></div>
+        <div class="service-card"><div class="service-icon"><i class="fas fa-video"></i></div><h3>Videography</h3><p>Corporate films, cinematic storytelling & music videos.</p></div>
+        <div class="service-card"><div class="service-icon"><i class="fas fa-pen-fancy"></i></div><h3>Poster Designing</h3><p>Stunning posters, flyers & brand visuals.</p></div>
+        <div class="service-card"><div class="service-icon"><i class="fas fa-film"></i></div><h3>Film Capturing</h3><p>High-end film production & documentary style.</p></div>
+        <div class="service-card"><div class="service-icon"><i class="fas fa-heart"></i></div><h3>Wedding Capturing</h3><p>Elegant wedding photography & cinematic highlights.</p></div>
+        <div class="service-card"><div class="service-icon"><i class="fas fa-people-arrows"></i></div><h3>Photoshoots</h3><p>Creative, pre-wedding & fine art photoshoots.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PORTFOLIO SECTION -->
+  <section id="portfolio" class="section portfolio-showcase" style="background:#050505;">
+    <div class="container">
+      <h2 class="section-title">Our <span>Creative Showcase</span></h2>
+      <div class="portfolio-category">
+        <div class="category-title"><i class="fas fa-palette" style="color:#FF4D4D; margin-right:10px;"></i> Poster & Graphic Design</div>
+        <div class="gallery-grid" id="posterGallery"></div>
+      </div>
+      <div class="portfolio-category">
+        <div class="category-title"><i class="fas fa-ring" style="color:#FF4D4D; margin-right:10px;"></i> Wedding Moments</div>
+        <div class="gallery-grid" id="weddingGallery"></div>
+      </div>
+      <div class="portfolio-category">
+        <div class="category-title"><i class="fas fa-camera" style="color:#FF4D4D; margin-right:10px;"></i> Photoshoots & Film Capturing</div>
+        <div class="gallery-grid" id="otherGallery"></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="testimonials" class="section">
+    <div class="container">
+      <h2 class="section-title">Client <span>Love</span></h2>
+      <div class="testimonial-slider">
+        <div class="testimonial-text" id="testimonialText">"DE-BRAND captured our wedding like a dream. The photographs and cinematic video was breathtaking! Absolute professionals."</div>
+        <div class="testimonial-author" id="testimonialAuthor">— Sarah & Michael</div>
+        <div class="dots" id="dotsContainer"></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" class="section">
+    <div class="container">
+      <h2 class="section-title">Let's <span>Create Together</span></h2>
+      <div class="contact-wrapper">
+        <div class="contact-info">
+          <h3 style="margin-bottom: 20px; font-size: 1.8rem;">Get in touch</h3>
+          <p><i class="fas fa-map-marker-alt"></i> Kampala, Uganda</p>
+          <p><i class="fas fa-phone-alt"></i> <strong>+256 769 848673</strong></p>
+          <p><i class="fas fa-envelope"></i> <strong>debrandmediastudios@gmail.com</strong></p>
+          <a href="https://wa.me/256769848673?text=Hello%20DE-BRAND%20MEDIA%20STUDIOS%2C%20I'm%20interested%20in%20your%20services" target="_blank" class="whatsapp-btn">
+            <i class="fab fa-whatsapp fa-lg"></i> Chat on WhatsApp
+          </a>
+          <div class="social-icons" style="margin-top: 30px;">
+            <!-- ALL SOCIAL MEDIA BUTTONS ACTIVE WITH CORRECT LINKS -->
+            <a href="https://www.tiktok.com/@debrandmediastudios" target="_blank" rel="noopener noreferrer"><i class="fab fa-tiktok"></i></a>
+            <a href="https://www.youtube.com/@debrandmediastudios" target="_blank" rel="noopener noreferrer"><i class="fab fa-youtube"></i></a>
+            <a href="https://www.facebook.com/debrandmediastudios" target="_blank" rel="noopener noreferrer"><i class="fab fa-facebook-f"></i></a>
+            <a href="https://www.instagram.com/debrandmediastudios" target="_blank" rel="noopener noreferrer"><i class="fab fa-instagram"></i></a>
+          </div>
+        </div>
+        <form class="contact-form" id="contactForm">
+          <input type="text" placeholder="Your Full Name" required id="nameInput">
+          <input type="email" placeholder="Email Address" required id="emailInput">
+          <input type="tel" placeholder="Phone Number (+256...)" id="phoneInput">
+          <textarea rows="4" placeholder="Tell us about your project (Wedding, Poster, Photoshoot, Film...) " required id="messageInput"></textarea>
+          <button type="submit" class="btn btn-primary" id="submitBtn" style="border:none; display: flex; align-items: center; justify-content: center; gap: 10px;">
+            Send Message <i class="fas fa-paper-plane"></i>
+            <span class="loading-spinner" id="loadingSpinner"></span>
+          </button>
+        </form>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="container">
+    <p>© 2025 DE-BRAND MEDIA STUDIOS — Kampala, Uganda | Where stories become visual art.</p>
+    <div class="social-icons" style="margin-top: 20px;">
+      <a href="https://www.tiktok.com/@debrandmediastudios" target="_blank" rel="noopener noreferrer"><i class="fab fa-tiktok"></i></a>
+      <a href="https://www.youtube.com/@debrandmediastudios" target="_blank" rel="noopener noreferrer"><i class="fab fa-youtube"></i></a>
+      <a href="https://www.facebook.com/debrandmediastudios" target="_blank" rel="noopener noreferrer"><i class="fab fa-facebook-f"></i></a>
+      <a href="https://www.instagram.com/debrandmediastudios" target="_blank" rel="noopener noreferrer"><i class="fab fa-instagram"></i></a>
+    </div>
+    <p style="margin-top: 20px; font-size: 0.8rem;"><i class="fab fa-whatsapp"></i> +256769848673 | debrandmediastudios@gmail.com</p>
+  </div>
+</footer>
+
+<script>
+  // ---------- HERO SLIDER LOGIC ----------
+  const slides = document.querySelectorAll('.slide');
+  const prevBtn = document.getElementById('prevSlide');
+  const nextBtn = document.getElementById('nextSlide');
+  const dotsContainerSlider = document.getElementById('sliderDots');
+  let currentSlide = 0;
+  let slideInterval;
+
+  function updateSlides(index) {
+    slides.forEach((slide, i) => {
+      slide.classList.remove('active');
+      if (i === index) slide.classList.add('active');
+    });
+    const dots = document.querySelectorAll('.slider-dot');
+    dots.forEach((dot, i) => {
+      if (i === index) dot.classList.add('active-dot-slider');
+      else dot.classList.remove('active-dot-slider');
+    });
+  }
+
+  function nextSlide() {
+    currentSlide = (currentSlide + 1) % slides.length;
+    updateSlides(currentSlide);
+  }
+  function prevSlide() {
+    currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+    updateSlides(currentSlide);
+  }
+  function startAutoSlide() {
+    slideInterval = setInterval(nextSlide, 5000);
+  }
+  function stopAutoSlide() {
+    clearInterval(slideInterval);
+  }
+  
+  if (nextBtn && prevBtn) {
+    nextBtn.addEventListener('click', () => { stopAutoSlide(); nextSlide(); startAutoSlide(); });
+    prevBtn.addEventListener('click', () => { stopAutoSlide(); prevSlide(); startAutoSlide(); });
+  }
+  
+  function createDotsSlider() {
+    if (!dotsContainerSlider) return;
+    dotsContainerSlider.innerHTML = '';
+    slides.forEach((_, idx) => {
+      const dot = document.createElement('div');
+      dot.classList.add('slider-dot');
+      if (idx === currentSlide) dot.classList.add('active-dot-slider');
+      dot.addEventListener('click', () => {
+        stopAutoSlide();
+        currentSlide = idx;
+        updateSlides(currentSlide);
+        startAutoSlide();
+      });
+      dotsContainerSlider.appendChild(dot);
+    });
+  }
+  createDotsSlider();
+  startAutoSlide();
+
+  // Mobile Menu
+  const menuToggle = document.getElementById('menuToggle');
+  const navLinks = document.getElementById('navLinks');
+  const closeMenuBtn = document.getElementById('closeMenu');
+  function toggleMenu() { navLinks.classList.toggle('active'); }
+  if (menuToggle) menuToggle.addEventListener('click', toggleMenu);
+  if (closeMenuBtn) closeMenuBtn.addEventListener('click', toggleMenu);
+  document.querySelectorAll('.nav-links a').forEach(link => {
+    link.addEventListener('click', () => navLinks.classList.remove('active'));
+  });
+
+  // Gallery Data
+  const posterData = [
+    { title: "Summer Music Fest Poster", img: "https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?w=600&h=450&fit=crop" },
+    { title: "Cinema Movie Poster", img: "https://images.unsplash.com/photo-1485846234645-a62644f84728?w=600&h=450&fit=crop" },
+    { title: "Fashion Brand Poster", img: "https://images.unsplash.com/photo-1539109136881-3be0616acf4b?w=600&h=450&fit=crop" },
+    { title: "Art Exhibition Flyer", img: "https://images.unsplash.com/photo-1578301978693-85fa9c0320b9?w=600&h=450&fit=crop" },
+    { title: "Corporate Event Poster", img: "https://images.unsplash.com/photo-1557804506-669a67965ba0?w=600&h=450&fit=crop" },
+    { title: "Wedding Invitation Design", img: "https://images.unsplash.com/photo-1519741497674-611481863552?w=600&h=450&fit=crop" }
+  ];
+  const weddingData = [
+    { title: "Elegant Bride Portrait", img: "https://images.unsplash.com/photo-1519741497674-611481863552?w=600&h=450&fit=crop" },
+    { title: "First Dance Magic", img: "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=600&h=450&fit=crop" },
+    { title: "Candid Laughs", img: "https://images.unsplash.com/photo-1520854221256-17451cc331bf?w=600&h=450&fit=crop" },
+    { title: "Cinematic Vows", img: "https://images.unsplash.com/photo-1519225421980-715cb0215aed?w=600&h=450&fit=crop" },
+    { title: "Golden Hour Couple", img: "https://images.unsplash.com/photo-1583939003579-730e3918a45a?w=600&h=450&fit=crop" },
+    { title: "Reception Details", img: "https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?w=600&h=450&fit=crop" }
+  ];
+  const otherData = [
+    { title: "Fashion Photoshoot", img: "https://images.unsplash.com/photo-1539109136881-3be0616acf4b?w=600&h=450&fit=crop" },
+    { title: "Short Film Scene", img: "https://images.unsplash.com/photo-1448375240586-882707db888b?w=600&h=450&fit=crop" },
+    { title: "Product Campaign", img: "https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=600&h=450&fit=crop" },
+    { title: "Documentary Style", img: "https://images.unsplash.com/photo-1500462918059-b1a0cb512f1d?w=600&h=450&fit=crop" },
+    { title: "Art Portrait Series", img: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=600&h=450&fit=crop" },
+    { title: "Music Video BTS", img: "https://images.unsplash.com/photo-1511379938547-c1f69419868d?w=600&h=450&fit=crop" }
+  ];
+  
+  function renderGallery(containerId, items) {
+    const container = document.getElementById(containerId);
+    if(!container) return;
+    container.innerHTML = '';
+    items.forEach(item => {
+      const div = document.createElement('div');
+      div.className = 'gallery-item';
+      div.innerHTML = `<img src="${item.img}" alt="${item.title}" loading="lazy"><div class="overlay"><span>${item.title}</span></div>`;
+      container.appendChild(div);
+    });
+  }
+  renderGallery('posterGallery', posterData);
+  renderGallery('weddingGallery', weddingData);
+  renderGallery('otherGallery', otherData);
+
+  // Testimonials Slider
+  const testimonials = [
+    { text: "DE-BRAND MEDIA STUDIOS produced an incredible short film for our brand — pure genius. The poster designs went viral!", author: "— Creative Agency" },
+    { text: "Our wedding film made us cry tears of joy. Professional, passionate and artistic. Highly recommend their wedding capturing!", author: "— Emily & James" },
+    { text: "Best photo & video team in Kampala! The photoshoot for my portfolio exceeded expectations.", author: "— Lionel, Model" },
+    { text: "We needed corporate promotional videos and poster designs — DE-BRAND delivered ahead of time with cinematic quality.", author: "— TechStart Inc." }
+  ];
+  let currentTestimonial = 0;
+  const testimonialTextElem = document.getElementById('testimonialText');
+  const testimonialAuthorElem = document.getElementById('testimonialAuthor');
+  const dotsContainer = document.getElementById('dotsContainer');
+  
+  function updateTestimonial(index) {
+    currentTestimonial = (index + testimonials.length) % testimonials.length;
+    if (testimonialTextElem) testimonialTextElem.innerText = `"${testimonials[currentTestimonial].text}"`;
+    if (testimonialAuthorElem) testimonialAuthorElem.innerText = testimonials[currentTestimonial].author;
+    document.querySelectorAll('.dot').forEach((dot, i) => { 
+      if (i === currentTestimonial) dot.classList.add('active-dot');
+      else dot.classList.remove('active-dot');
+    });
+  }
+  
+  function createDots() {
+    if (!dotsContainer) return;
+    dotsContainer.innerHTML = '';
+    testimonials.forEach((_, idx) => {
+      const dot = document.createElement('div');
+      dot.classList.add('dot');
+      if(idx === currentTestimonial) dot.classList.add('active-dot');
+      dot.addEventListener('click', () => updateTestimonial(idx));
+      dotsContainer.appendChild(dot);
+    });
+  }
+  createDots();
+  setInterval(() => updateTestimonial(currentTestimonial + 1), 5500);
+
+  // WORKING CONTACT FORM
+  const contactForm = document.getElementById('contactForm');
+  const submitBtn = document.getElementById('submitBtn');
+  const loadingSpinner = document.getElementById('loadingSpinner');
+  
+  if (contactForm) {
+    contactForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      const name = document.getElementById('nameInput').value.trim();
+      const email = document.getElementById('emailInput').value.trim();
+      const phone = document.getElementById('phoneInput').value.trim();
+      const message = document.getElementById('messageInput').value.trim();
+      
+      if (!name || !email || !message) {
+        alert("❌ Please fill in Name, Email and Message fields.");
+        return;
+      }
+      
+      if (!email.includes('@') || !email.includes('.')) {
+        alert("❌ Please enter a valid email address.");
+        return;
+      }
+      
+      submitBtn.disabled = true;
+      if (loadingSpinner) loadingSpinner.style.display = 'inline-block';
+      
+      const formData = new FormData();
+      formData.append('name', name);
+      formData.append('email', email);
+      formData.append('phone', phone);
+      formData.append('message', message);
+      formData.append('_subject', `📸 New Inquiry from ${name} - DE-BRAND MEDIA STUDIOS`);
+      formData.append('_replyto', email);
+      formData.append('_captcha', 'false');
+      
+      try {
+        const response = await fetch('https://formsubmit.co/ajax/debrandmediastudios@gmail.com', {
+          method: 'POST',
+          body: formData
+        });
+        
+        const data = await response.json();
+        
+        if (data.success === true || response.ok) {
+          alert("✅ Message sent successfully! DE-BRAND MEDIA STUDIOS will contact you within 24 hours via WhatsApp or phone call.");
+          contactForm.reset();
+        } else {
+          alert("⚠️ Message could not be sent. Please reach out via WhatsApp: +256769848673");
+        }
+      } catch (error) {
+        console.error('Form submission error:', error);
+        alert("⚠️ Unable to send message. Please contact us directly on WhatsApp: +256769848673");
+      } finally {
+        submitBtn.disabled = false;
+        if (loadingSpinner) loadingSpinner.style.display = 'none';
+      }
+    });
+  }
+
+  // Smooth scrolling
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function(e) {
+      const href = this.getAttribute('href');
+      if (href === "#" || href === "") return;
+      const target = document.querySelector(href);
+      if (target) {
+        e.preventDefault();
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+  
+  // Active nav highlight
+  const sections = document.querySelectorAll('section');
+  const navItems = document.querySelectorAll('.nav-links a');
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(section => {
+      const sectionTop = section.offsetTop - 120;
+      if (pageYOffset >= sectionTop) current = section.getAttribute('id');
+    });
+    navItems.forEach(link => {
+      link.classList.remove('active');
+      if (link.getAttribute('href') === `#${current}`) link.classList.add('active');
+    });
+  });
+</script>
+</body>
+</html>
